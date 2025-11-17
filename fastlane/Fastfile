@@ -269,6 +269,27 @@ platform :android do
     __run_unit_tests(opts)
   end
 
+  desc 'Alias for Codemagic PR Required job (static analysis + unit tests)'
+  lane :ci_pr_required do |opts|
+    ci_pr_checks(opts)
+  end
+
+  desc 'Codemagic PR Optional job - builds Dev release artifacts for reviewers'
+  lane :ci_pr_optional do |opts|
+    ci_seed_android_files(opts)
+    __run_spotless(opts)
+    __run_unit_tests(flavor: opts[:test_flavor] || 'Dev', build_type: opts[:test_build_type] || 'Debug')
+
+    version_code = opts[:version_code] || ENV['PROJECT_BUILD_NUMBER'] || ENV['CI_PIPELINE_ID']
+    properties = {}
+    properties['versionCode'] = version_code if version_code
+    __assemble_variant(flavor: opts[:build_flavor] || 'Dev', build_type: 'Release', properties: properties)
+
+    if opts[:upload_to_firebase] || ENV['CI_UPLOAD_FIREBASE'] == '1'
+      __upload_firebase(opts)
+    end
+  end
+
   desc 'Assemble Dev release artifacts and optionally upload to Firebase App Distribution'
   lane :ci_dev_distribution do |opts|
     ci_seed_android_files(opts)

@@ -8,6 +8,8 @@ Shared Android Fastlane lanes that mirror the tattoo-android Codemagic workflows
 | --- | --- |
 | `ci_seed_android_files` | Re-creates `local.properties`, flavor-specific `app.properties`, `google-services.json`, `meta.properties`, and `keystore.properties` from Base64 env vars. |
 | `ci_pr_checks` | Runs the same setup as Codemagic PR workflow followed by `spotlessCheck` (if available) and `testDevDebugUnitTest`. |
+| `ci_pr_required` | Alias for `ci_pr_checks`, handy for marking the "required" Codemagic job. |
+| `ci_pr_optional` | Builds a Dev release artifact (and optionally uploads to Firebase) after the same setup/tests, suited for "optional" Codemagic jobs. |
 | `ci_dev_distribution` | Prepares files, runs checks, assembles `DevRelease`, and optionally uploads the latest APK/AAB to Firebase App Distribution. |
 | `ci_prod_play_store` | Prepares files, runs Prod unit tests, bundles `ProdRelease`, and can upload the generated AAB to the Play Store. |
 | `ci_unit_tests` | Convenience wrapper around a configurable Gradle unit test task. |
@@ -42,4 +44,3 @@ import_from_git(
 ```
 
 You can then call any lane defined above, e.g. `bundle exec fastlane android ci_pr_checks`.
-

@@ -5,7 +5,7 @@ Shared Fastlane lanes for Android CI/CD that replicate the Codemagic workflows u
 ## Features
 
 - Deterministic recreation of all Codemagic secrets (`local.properties`, flavor configs, `google-services.json`, meta files, keystores).
-- Drop-in lanes for PR checks, Dev Firebase distributions, and Prod Play Store releases.
+- Drop-in lanes for PR required/optional checks, Dev Firebase distributions, and Prod Play Store releases.
 - Optional Firebase App Distribution and Play Store uploads controlled purely via environment variables.
 - Works with Codemagic, GitHub Actions, Bitrise, or local development via the same Fastlane API.
 
